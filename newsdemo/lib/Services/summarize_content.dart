@@ -18,7 +18,6 @@ class Summarize {
 
       title = data['title'];
       content = data['summary'];
-      print(content.toString());
       return content;
     } else {
       throw Exception('Error...');

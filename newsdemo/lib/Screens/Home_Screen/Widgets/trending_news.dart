@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:newsdemo/Models/top_news_model.dart';
-import 'package:newsdemo/Screens/Detailed_Screen/details.dart';
+import 'package:newsdemo/Screens/Detailed_Screen/Pages/details.dart';
 import 'package:newsdemo/Services/service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsdemo/Models/top_news_model.dart';
+import 'package:newsdemo/Screens/Detailed_Screen/Services/voice.dart';
 import 'package:newsdemo/Services/summarize_content.dart';
 
 class DetailsScreen extends StatefulWidget {
@@ -50,6 +51,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   }
                   return Text(snapshot.data.toString());
                 }),
+            Voice(),
           ],
         ),
       ),
