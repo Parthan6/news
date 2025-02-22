@@ -12,6 +12,7 @@ class IndianNewsList extends StatefulWidget {
 
 class _IndianNewsListState extends State<IndianNewsList> {
   late Future<List<IndianNewsModel>> news;
+  List newsList = [];
 
   @override
   void initState() {
@@ -29,18 +30,26 @@ class _IndianNewsListState extends State<IndianNewsList> {
             if (!snapshot.hasData) {
               return CircularProgressIndicator();
             }
-            return ListView.builder(
-                itemBuilder: (context, index) {
-                  final newsItem = snapshot.data![index];
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                final newsItem = snapshot.data![index];
 
-                  return ListTile(
-                    title: Text(newsItem.title),
-                    subtitle: IndianContent(
-                      link: newsItem.content,
-                    ),
-                  );
-                },
-                itemCount: snapshot.data!.length);
+                return ListTile(
+                  title: Text(
+                    newsItem.title,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: IndianContent(
+                    link: newsItem.content,
+                    newsList: newsList,
+                  ),
+                );
+              },
+              itemCount: snapshot.data!.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider();
+              },
+            );
           }),
     );
   }

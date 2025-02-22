@@ -51,7 +51,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   }
                   return Text(snapshot.data.toString());
                 }),
-            Voice(),
+            Voice(
+              text: widget.news.title.toString(),
+            ),
           ],
         ),
       ),

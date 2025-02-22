@@ -3,7 +3,8 @@ import 'package:newsdemo/Services/summarize_content.dart';
 
 class IndianContent extends StatefulWidget {
   final String link;
-  IndianContent({super.key, required this.link});
+  List newsList;
+  IndianContent({super.key, required this.link, required this.newsList});
 
   @override
   State<IndianContent> createState() => _IndianContentState();
@@ -26,6 +27,7 @@ class _IndianContentState extends State<IndianContent> {
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
+          widget.newsList.add(snapshot.data);
           return Text(snapshot.data.toString());
         });
   }

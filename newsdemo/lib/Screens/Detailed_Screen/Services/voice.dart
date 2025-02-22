@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class Voice extends StatefulWidget {
-  const Voice({Key? key}) : super(key: key);
+  final String text;
+  Voice({Key? key, required this.text}) : super(key: key);
+  //Voice({Key? key}) : super(key: key);
 
   @override
   State<Voice> createState() => _VoiceState();
@@ -10,7 +12,6 @@ class Voice extends StatefulWidget {
 
 class _VoiceState extends State<Voice> {
   late FlutterTts flutterTts;
-  final String textToRead = "Welcome to the Flutter text-to-speech demo!";
 
   @override
   void initState() {
@@ -20,42 +21,41 @@ class _VoiceState extends State<Voice> {
 
   void initTts() {
     flutterTts = FlutterTts();
+
     flutterTts.setCompletionHandler(() {
       print("Speech completed");
     });
+
     flutterTts.setErrorHandler((msg) {
       print("Speech error: $msg");
     });
   }
 
-  Future<void> speakText() async {
-    try {
-      await flutterTts.setLanguage("en-US");
-      await flutterTts.setSpeechRate(0.5);
-      await flutterTts.setPitch(1.0);
+  Future<void> speakText(String text) async {
+    print("Attempting to speak: $text");
 
-      var result = await flutterTts.speak(textToRead);
-      if (result == 1) {
-        print("Speech started");
-      } else {
-        print("Error starting speech");
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1.0);
+
+    int result = await flutterTts.speak(text);
+    print("Speech result: $result");
   }
 
   @override
   void dispose() {
-    flutterTts.stop(); // Clean up TTS instance
-    super.dispose();
+    flutterTts.stop().then((_) {
+      super.dispose();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: speakText,
-      icon: Icon(Icons.volume_up),
+      onPressed: () {
+        speakText(widget.text.toString());
+      },
+      icon: const Icon(Icons.volume_up),
     );
   }
 }
