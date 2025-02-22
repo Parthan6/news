@@ -8,7 +8,7 @@ class IndianNews {
   //String content = '';
 
   Future<List<IndianNewsModel>> fetchIndian() async {
-    final String url = 'http://10.0.2.2:8000/fetch_news';
+    final String url = 'http://10.0.2.2:10000/fetch_news';
     try {
       final response = await http.get(Uri.parse(url));
 
