@@ -3,8 +3,15 @@ import 'package:newsdemo/Services/summarize_content.dart';
 
 class IndianContent extends StatefulWidget {
   final String link;
-  List newsList;
-  IndianContent({super.key, required this.link, required this.newsList});
+  final List<String?> newsList;
+  final int index;
+
+  const IndianContent({
+    super.key,
+    required this.link,
+    required this.newsList,
+    required this.index,
+  });
 
   @override
   State<IndianContent> createState() => _IndianContentState();
@@ -15,20 +22,36 @@ class _IndianContentState extends State<IndianContent> {
 
   @override
   void initState() {
-    content = Summarize().fetchSummary(widget.link);
     super.initState();
+    if (widget.newsList[widget.index] == null) {
+      content = Summarize().fetchSummary(widget.link).then((summary) {
+        setState(() {
+          widget.newsList[widget.index] = summary;
+        });
+        return summary;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: content,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator();
-          }
-          widget.newsList.add(snapshot.data);
-          return Text(snapshot.data.toString());
-        });
+    return widget.newsList[widget.index] != null
+        ? Text(widget.newsList[widget.index]!)
+        : FutureBuilder<String>(
+            future: content,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text("Failed to summarize content"));
+              }
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text("No summary available"));
+              }
+
+              return Text(snapshot.data!);
+            },
+          );
   }
 }

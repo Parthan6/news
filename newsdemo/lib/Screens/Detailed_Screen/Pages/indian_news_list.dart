@@ -12,45 +12,57 @@ class IndianNewsList extends StatefulWidget {
 
 class _IndianNewsListState extends State<IndianNewsList> {
   late Future<List<IndianNewsModel>> news;
-  List newsList = [];
+  List<String?> newsSummaries = []; // Stores fetched summaries
 
   @override
   void initState() {
-    news = IndianNews().fetchIndian();
     super.initState();
+    news = IndianNews().fetchIndian();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder(
-          future: news,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            return ListView.separated(
-              itemBuilder: (context, index) {
-                final newsItem = snapshot.data![index];
+      appBar: AppBar(title: Text("Indian News")),
+      body: FutureBuilder<List<IndianNewsModel>>(
+        future: news,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text("Failed to load news"));
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text("No news available"));
+          }
 
-                return ListTile(
-                  title: Text(
-                    newsItem.title,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: IndianContent(
-                    link: newsItem.content,
-                    newsList: newsList,
-                  ),
-                );
-              },
-              itemCount: snapshot.data!.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider();
-              },
-            );
-          }),
+          // Initialize the summary list with null values
+          if (newsSummaries.isEmpty) {
+            newsSummaries = List<String?>.filled(snapshot.data!.length, null);
+          }
+
+          return ListView.separated(
+            itemCount: snapshot.data!.length,
+            separatorBuilder: (context, index) => Divider(),
+            itemBuilder: (context, index) {
+              final newsItem = snapshot.data![index];
+
+              return ListTile(
+                title: Text(
+                  newsItem.title,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                subtitle: IndianContent(
+                  link: newsItem.content,
+                  newsList: newsSummaries,
+                  index: index,
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
