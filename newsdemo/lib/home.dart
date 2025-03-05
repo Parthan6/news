@@ -4,6 +4,7 @@ import 'package:newsdemo/Screens/Calender_Screen/calender.dart';
 import 'package:newsdemo/Screens/Home_Screen/Pages/home_screen.dart';
 import 'package:newsdemo/Screens/Notes_Screen/notes.dart';
 import 'package:newsdemo/Screens/Profile_Screen/profile.dart';
+import 'package:newsdemo/Screens/Quiz_Screen/quiz.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,6 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     BookMark(),
     Notes(),
     Profile(),
+    NewsQuizApp(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Icons.notes_rounded), label: 'Notes'),
           NavigationDestination(
               icon: Icon(Icons.person_2_rounded), label: 'Profile'),
+          NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
         ],
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {

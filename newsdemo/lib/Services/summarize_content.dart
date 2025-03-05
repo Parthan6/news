@@ -8,7 +8,9 @@ class Summarize {
 
   Future<String> fetchSummary(String url) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:10000/summarize'),
+      Uri.parse(
+          //'https://news-content-backend.vercel.app/summarize'),
+          'http://10.0.2.2:10000/summarize'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({'url': url}),
     );
