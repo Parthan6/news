@@ -38,6 +38,14 @@ dependencies:
   http: ^1.2.2
   carousel_slider: ^5.0.0
   flutter_tts: ^3.8.5
+  table_calendar: ^3.2.0
+  path_provider: ^2.1.4
+  permission_handler: ^11.3.1
+  pdf: ^3.11.3
+  open_file: ^3.5.4
+  url_launcher: ^6.3.1
+  shared_preferences: ^2.2.3
+  google_fonts: ^6.2.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -73,7 +81,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/fonts/NotoSans-Regular.ttf
+  
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -88,11 +98,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: Schyler
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+  #      - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

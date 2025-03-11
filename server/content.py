@@ -4,12 +4,19 @@ from bs4 import BeautifulSoup
 import nltk
 from newspaper import Article
 from flask_cors import CORS
+from pymongo import MongoClient
+from datetime import datetime
+import schedule
+import time
+import threading
 
 nltk.download('punkt')
 
 app = Flask(__name__)
 
 CORS(app)
+
+
 
 
 def fetch_todays_news():
@@ -50,11 +57,11 @@ def get_news():
     return jsonify(news_data)
 
 
-@app.route('/summarize', methods=['POST'])
-def summarize_news():
+
+def summarize_news(url):
     try:
-        data = request.json
-        url = data.get('url')
+        
+        #url = data.get('url')
         if not url:
             return jsonify({'error': 'URL is required'}), 400
 
@@ -68,6 +75,12 @@ def summarize_news():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/summarize', methods=['GET'])
+def summary():
+    url = request.args.get('url')
+    content = summarize_news(url)
+    return content
 
 
 

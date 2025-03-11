@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
   List<Widget> ScreenList = [
     HomeScreen(),
-    Calender(),
+    Calendar(),
     BookMark(),
     Notes(),
     Profile(),
