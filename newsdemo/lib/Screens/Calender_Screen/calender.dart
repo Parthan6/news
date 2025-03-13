@@ -19,7 +19,7 @@ class Calendar extends StatefulWidget {
 class _NewsCalendarScreenState extends State<Calendar> {
   DateTime _selectedDate = DateTime.now();
   String apiUrl = "http://10.0.2.2:5000/fetch_stored_news?date=";
-  //'https://newscontentbackend-8.onrender.com/fetch_stored_news?date=';
+  // 'https://newscontentbackend-8.onrender.com/fetch_stored_news?date=';
 
   Future<pw.Font> loadCustomFont() async {
     final fontData = await rootBundle.load("assets/fonts/NotoSans-Regular.ttf");
@@ -105,7 +105,9 @@ class _NewsCalendarScreenState extends State<Calendar> {
                     font: customFont,
                     fontFallback: [customFont])),
             for (var news in indianNews)
-              pw.Text("${news['title']}\n${news['content']}\n\n"),
+              pw.Text("${news['title']}\n${news['content']}\n\n",
+                  style: pw.TextStyle(
+                      font: customFont, fontFallback: [customFont])),
             pw.Text("International News",
                 style: pw.TextStyle(
                     fontSize: 16,
@@ -113,7 +115,9 @@ class _NewsCalendarScreenState extends State<Calendar> {
                     font: customFont,
                     fontFallback: [customFont])),
             for (var news in internationalNews)
-              pw.Text("${news['title']}\n${news['summary']}\n\n"),
+              pw.Text("${news['title']}\n${news['summary']}\n\n",
+                  style: pw.TextStyle(
+                      font: customFont, fontFallback: [customFont])),
           ],
         ),
       );
@@ -124,10 +128,13 @@ class _NewsCalendarScreenState extends State<Calendar> {
       await file.writeAsBytes(await pdf.save());
 
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("PDF Downloaded: $filePath")));
-        OpenFile.open(filePath);
+        Future.delayed(Duration.zero, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("PDF Downloaded: $filePath")),
+          );
+        });
       }
+      OpenFile.open(filePath);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)

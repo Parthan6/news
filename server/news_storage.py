@@ -140,7 +140,7 @@ def get_stored_news():
 
 
 # Schedule daily news storage at 6:00 AM
-schedule.every().day.at("06:00").do(store_news)
+schedule.every().day.at("21:10").do(store_news)
 
 def run_scheduler():
     """Run scheduled task in a separate thread."""

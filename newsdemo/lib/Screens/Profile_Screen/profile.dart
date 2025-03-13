@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newsdemo/authCheck.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -8,6 +10,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,13 +31,17 @@ class _ProfileState extends State<Profile> {
               size: 200,
             ),
             Text(
-              'User ABC',
+              user!.email!,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 25,
             ),
-            ElevatedButton(onPressed: () {}, child: Text('Log out'))
+            ElevatedButton(
+                onPressed: () {
+                  logout();
+                },
+                child: Text('Log out'))
           ],
         ),
       ),

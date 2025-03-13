@@ -2,13 +2,13 @@ from flask import Flask, request, jsonify
 import requests
 from bs4 import BeautifulSoup
 import nltk
-from newspaper import Article
+#from newspaper import Article
 from flask_cors import CORS
-from pymongo import MongoClient
-from datetime import datetime
-import schedule
-import time
-import threading
+#from pymongo import MongoClient
+#from datetime import datetime
+#import schedule
+#import time
+#import threading
 
 nltk.download('punkt')
 
@@ -21,6 +21,7 @@ CORS(app)
 
 def fetch_todays_news():
     try:
+        
         url = "https://www.thehindu.com/"
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -30,6 +31,8 @@ def fetch_todays_news():
         soup = BeautifulSoup(response.text, 'html.parser')
 
         news_data = []
+
+        
 
         # Extracting news from The Hindu
         news_items = soup.find_all("h3", class_="title")
@@ -44,7 +47,7 @@ def fetch_todays_news():
 
         if not news_data:
             return {"error": "No headlines found on The Hindu."}
-
+        
         return {"news": news_data}
 
     except Exception as e:
@@ -55,33 +58,6 @@ def fetch_todays_news():
 def get_news():
     news_data = fetch_todays_news()
     return jsonify(news_data)
-
-
-
-def summarize_news(url):
-    try:
-        
-        #url = data.get('url')
-        if not url:
-            return jsonify({'error': 'URL is required'}), 400
-
-        # Extract news from the URL
-        article = Article(url)
-        article.download()
-        article.parse()
-        article.nlp()
-
-        return jsonify({'title': article.title, 'summary': article.summary})
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    
-@app.route('/summarize', methods=['GET'])
-def summary():
-    url = request.args.get('url')
-    content = summarize_news(url)
-    return content
-
 
 
 if __name__ == '__main__':

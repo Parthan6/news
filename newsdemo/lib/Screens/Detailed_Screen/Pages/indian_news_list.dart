@@ -31,6 +31,7 @@ class _IndianNewsListState extends State<IndianNewsList> {
             return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
+            //print(snapshot.data);
             return Center(child: Text("Failed to load news"));
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
