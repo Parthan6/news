@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newsdemo/Screens/BookMark_Screen/bookmark.dart';
 import 'package:newsdemo/Screens/Calender_Screen/calender.dart';
 import 'package:newsdemo/Screens/Home_Screen/Pages/home_screen.dart';
+import 'package:newsdemo/Screens/Notes_Screen/note_list.dart';
 import 'package:newsdemo/Screens/Notes_Screen/notes.dart';
 import 'package:newsdemo/Screens/Profile_Screen/profile.dart';
 import 'package:newsdemo/Screens/Quiz_Screen/quiz.dart';
@@ -18,10 +19,9 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> ScreenList = [
     HomeScreen(),
     Calendar(),
-    BookMark(),
-    Notes(),
-    Profile(),
     NewsQuizApp(),
+    NoteListPage(),
+    Profile(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -35,13 +35,11 @@ class _MainScreenState extends State<MainScreen> {
           NavigationDestination(icon: Icon(Icons.home_rounded), label: 'Home'),
           NavigationDestination(
               icon: Icon(Icons.calendar_view_day_rounded), label: 'Calender'),
-          NavigationDestination(
-              icon: Icon(Icons.bookmark_rounded), label: 'Bookmark'),
+          NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
           NavigationDestination(
               icon: Icon(Icons.notes_rounded), label: 'Notes'),
           NavigationDestination(
               icon: Icon(Icons.person_2_rounded), label: 'Profile'),
-          NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
         ],
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {

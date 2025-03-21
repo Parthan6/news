@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newsdemo/Screens/BookMark_Screen/bookmark.dart';
 import 'package:newsdemo/authCheck.dart';
 
 class Profile extends StatefulWidget {
@@ -34,6 +35,15 @@ class _ProfileState extends State<Profile> {
               user!.email!,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
+            SizedBox(
+              height: 25,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BookMark()));
+                },
+                child: Text('Bookmark')),
             SizedBox(
               height: 25,
             ),

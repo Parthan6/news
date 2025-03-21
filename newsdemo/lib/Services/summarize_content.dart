@@ -16,8 +16,8 @@ class Summarize {
     //   body: json.encode({'url': url}),
     // );
     final response = await http.get(Uri.parse(
-        //'https://newscontentbackend-9.onrender.com/summarize?url=$url'));
-        'http://10.0.2.2:8000/summarize?url=$url'));
+        'https://newscontentbackend-9.onrender.com/summarize?url=$url'));
+    // 'http://10.0.2.2:8000/summarize?url=$url'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

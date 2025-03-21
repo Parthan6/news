@@ -18,8 +18,8 @@ class Calendar extends StatefulWidget {
 
 class _NewsCalendarScreenState extends State<Calendar> {
   DateTime _selectedDate = DateTime.now();
-  String apiUrl = "http://10.0.2.2:5000/fetch_stored_news?date=";
-  // 'https://newscontentbackend-8.onrender.com/fetch_stored_news?date=';
+  String apiUrl = //"http://10.0.2.2:5000/fetch_stored_news?date=";
+      'https://newscontentbackend-8.onrender.com/fetch_stored_news?date=';
 
   Future<pw.Font> loadCustomFont() async {
     final fontData = await rootBundle.load("assets/fonts/NotoSans-Regular.ttf");
@@ -149,6 +149,10 @@ class _NewsCalendarScreenState extends State<Calendar> {
       appBar: AppBar(title: Text("News Calendar")),
       body: Column(
         children: [
+          Text(
+            "Select a date to view news summaries",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           TableCalendar(
             focusedDay: DateTime.now(),
             firstDay: DateTime(2023, 1, 1),

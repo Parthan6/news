@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:newsdemo/Models/indian_news_model.dart';
 import 'package:newsdemo/Screens/Detailed_Screen/Pages/Indian_content.dart';
+import 'package:newsdemo/Screens/Detailed_Screen/Services/add_bookmark.dart';
+import 'package:newsdemo/Screens/Detailed_Screen/Services/voice.dart';
 import 'package:newsdemo/Services/indian_news.dart';
 
 class IndianNewsList extends StatefulWidget {
@@ -13,6 +16,7 @@ class IndianNewsList extends StatefulWidget {
 class _IndianNewsListState extends State<IndianNewsList> {
   late Future<List<IndianNewsModel>> news;
   List<String?> newsSummaries = []; // Stores fetched summaries
+  bool marked = false;
 
   @override
   void initState() {
@@ -54,10 +58,32 @@ class _IndianNewsListState extends State<IndianNewsList> {
                   newsItem.title,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                subtitle: IndianContent(
-                  link: newsItem.content,
-                  newsList: newsSummaries,
-                  index: index,
+                subtitle: Column(
+                  children: [
+                    IndianContent(
+                      link: newsItem.content,
+                      newsList: newsSummaries,
+                      index: index,
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.bookmark),
+                          onPressed: () {
+                            addBookmark(newsItem.title,
+                                newsSummaries[index].toString());
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Voice(
+                          text:
+                              newsItem.title + newsSummaries[index].toString(),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               );
             },

@@ -47,6 +47,8 @@ class _VoiceState extends State<Voice> {
     flutterTts.stop().then((_) {
       super.dispose();
     });
+    // flutterTts.stop(); // Stop TTS before disposing
+    // super.dispose(); // Ensure proper cleanup
   }
 
   @override

@@ -112,14 +112,25 @@ def store_news():
                 "indian_news": indian_news,
                 "international_news": international_news
             })
-            print("✅ Today's news stored successfully in MongoDB.")
-        else:
-            print("⚠️ No news found for today.")
-    else:
-        print("⚠️ News for today already exists in MongoDB.")
+            #print("✅ Today's news stored successfully in MongoDB.")
+        #else:
+            #print("⚠️ No news found for today.")
+    #else:
+       # print("⚠️ News for today already exists in MongoDB.")
 
 
 
+
+@app.route('/trigger_store_news', methods=['GET'])
+def trigger_store_news():
+    try:
+        store_news()
+        return jsonify({"message": "News stored successfully."}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    #store_news()
+    
 
 
 @app.route('/fetch_stored_news', methods=['GET'])
@@ -140,13 +151,14 @@ def get_stored_news():
 
 
 # Schedule daily news storage at 6:00 AM
-schedule.every().day.at("21:10").do(store_news)
+schedule.every().day.at("20:40").do(store_news)
 
 def run_scheduler():
-    """Run scheduled task in a separate thread."""
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
+ #   """Run scheduled task in a separate thread."""
+  
+  while True:
+       schedule.run_pending()
+       time.sleep(60)
 
 # Start scheduler in a background thread
 threading.Thread(target=run_scheduler, daemon=True).start()

@@ -166,12 +166,15 @@ class _NewsQuizAppState extends State<NewsQuizApp> {
                               : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: selectedAnswer == null
-                                ? Colors.blue
+                                ? Colors.black
                                 : isSelected
                                     ? (isCorrect ? Colors.green : Colors.red)
                                     : (isCorrect ? Colors.green : Colors.grey),
                           ),
-                          child: Text(option),
+                          child: Text(
+                            option,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }),
                       if (selectedAnswer != null) ...[

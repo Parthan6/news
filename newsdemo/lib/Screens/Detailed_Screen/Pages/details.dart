@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:newsdemo/Models/top_news_model.dart';
+import 'package:newsdemo/Screens/Detailed_Screen/Services/add_bookmark.dart';
 import 'package:newsdemo/Screens/Detailed_Screen/Services/voice.dart';
 import 'package:newsdemo/Services/summarize_content.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String category;
@@ -14,11 +16,47 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   late Future<String> content;
+  String newsContent = '';
+  late bool isBookmarked = false;
 
   @override
   void initState() {
     content = Summarize().fetchSummary(widget.news.url!);
+
+    content.then((summary) {
+      setState(() {
+        newsContent = summary;
+      });
+    });
+
+    checkIfBookmarked();
     super.initState();
+  }
+
+  void checkIfBookmarked() async {
+    bool exists = await isBookmarkedInFirestore(widget.news.title.toString());
+    if (mounted) {
+      setState(() {
+        isBookmarked = exists;
+      });
+    }
+  }
+
+  Future<void> removeBookmarkFromFirestore(String title) async {
+    try {
+      final bookmarksCollection =
+          FirebaseFirestore.instance.collection('bookmarks');
+
+      // Query Firestore for the document with the matching title
+      QuerySnapshot querySnapshot =
+          await bookmarksCollection.where('title', isEqualTo: title).get();
+
+      for (var doc in querySnapshot.docs) {
+        await doc.reference.delete(); // Delete the matching document
+      }
+    } catch (e) {
+      print('Error removing bookmark: $e');
+    }
   }
 
   @override
@@ -49,10 +87,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator();
                   }
-                  return Text(snapshot.data.toString());
+
+                  return Text(newsContent);
                 }),
-            Voice(
-              text: widget.news.title.toString(),
+            Row(
+              children: [
+                Voice(
+                  text: widget.news.title.toString() + '\n' + newsContent,
+                ),
+                IconButton(
+                    onPressed: () async {
+                      if (!isBookmarked) {
+                        addBookmark(
+                          widget.news.title.toString(),
+                          newsContent,
+                        );
+                        setState(() {
+                          isBookmarked = true;
+                        });
+                      } else {
+                        await removeBookmarkFromFirestore(
+                            widget.news.title.toString());
+                        setState(() {
+                          isBookmarked = false;
+                        });
+                      }
+                    },
+                    icon: isBookmarked
+                        ? Icon(Icons.bookmark)
+                        : Icon(Icons.bookmark_border_rounded))
+              ],
             ),
           ],
         ),
