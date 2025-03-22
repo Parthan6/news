@@ -5,7 +5,8 @@
         android:label="newsdemo"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        >
         
         <activity
             android:name=".MainActivity"

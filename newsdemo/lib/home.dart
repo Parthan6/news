@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newsdemo/Screens/BookMark_Screen/bookmark.dart';
 import 'package:newsdemo/Screens/Calender_Screen/calender.dart';
 import 'package:newsdemo/Screens/Home_Screen/Pages/home_screen.dart';
+import 'package:newsdemo/Screens/Languages/language_list.dart';
 import 'package:newsdemo/Screens/Notes_Screen/note_list.dart';
 import 'package:newsdemo/Screens/Notes_Screen/notes.dart';
 import 'package:newsdemo/Screens/Profile_Screen/profile.dart';
@@ -18,8 +19,8 @@ class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
   List<Widget> ScreenList = [
     HomeScreen(),
-    Calendar(),
     NewsQuizApp(),
+    LanguageList(),
     NoteListPage(),
     Profile(),
   ];
@@ -33,9 +34,8 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: NavigationBar(
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_rounded), label: 'Home'),
-          NavigationDestination(
-              icon: Icon(Icons.calendar_view_day_rounded), label: 'Calender'),
           NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
+          NavigationDestination(icon: Icon(Icons.language), label: 'Languages'),
           NavigationDestination(
               icon: Icon(Icons.notes_rounded), label: 'Notes'),
           NavigationDestination(

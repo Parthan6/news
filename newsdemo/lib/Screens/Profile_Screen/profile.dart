@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newsdemo/Screens/BookMark_Screen/bookmark.dart';
+import 'package:newsdemo/Screens/Calender_Screen/calender.dart';
 import 'package:newsdemo/authCheck.dart';
 
 class Profile extends StatefulWidget {
@@ -27,6 +28,12 @@ class _ProfileState extends State<Profile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Calendar()));
+                },
+                child: Text('News Archive')),
             Icon(
               Icons.person,
               size: 200,
