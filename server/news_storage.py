@@ -11,7 +11,14 @@ import time
 import threading
 
 
+# Set a persistent NLTK data directory
+NLTK_DATA_PATH = "/opt/render/project/src/nltk_data"
+os.makedirs(NLTK_DATA_PATH, exist_ok=True)  # Ensure directory exists
+nltk.data.path.append(NLTK_DATA_PATH)  # Add it to NLTK's search path
 
+# Download 'punkt' and 'punkt_tab' explicitly
+nltk.download('punkt', download_dir=NLTK_DATA_PATH)
+nltk.download('punkt_tab', download_dir=NLTK_DATA_PATH)
 
 
 MONGO_URI = "mongodb+srv://news_db:newsdbPass%40123@news.pdam6.mongodb.net/?retryWrites=true&w=majority&appName=News"
