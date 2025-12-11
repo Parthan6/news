@@ -40,7 +40,7 @@ class _NewsQuizAppState extends State<NewsQuizApp> {
   }
 
   Future<void> fetchQuestions() async {
-    const apiKey = "AIzaSyCHeYLQvve5TxznqMmEuEtH7btM1ib-L2I";
+    const apiKey = GEMINI_API_KEY;
     const url =
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey";
 
