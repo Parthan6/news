@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:newsdemo/Models/top_news_model.dart';
 import 'package:http/http.dart' as http;
 
-const apiKey = "7becca76f77e4b62a4e73579f77250a3";
+
 
 class TopNewsAPI {
   final APIurl =
