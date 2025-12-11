@@ -21,7 +21,7 @@ nltk.download('punkt', download_dir=NLTK_DATA_PATH)
 nltk.download('punkt_tab', download_dir=NLTK_DATA_PATH)
 
 
-MONGO_URI = "mongodb+srv://news_db:newsdbPass%40123@news.pdam6.mongodb.net/?retryWrites=true&w=majority&appName=News"
+
 client = MongoClient(MONGO_URI)
 db = client["news_database"]
 collection = db["daily_news"]
@@ -69,7 +69,7 @@ def fetch_todays_news():
 def get_newsapi_data():
     """Fetch top news from NewsAPI."""
     try:
-        api_key = "7becca76f77e4b62a4e73579f77250a3"
+        
         url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}"
         response = requests.get(url)
         response.raise_for_status()
